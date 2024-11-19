@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -21,16 +19,19 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Will report a student as a query string parameter and as the request body
-app.MapPost("/enroll1", (Student student) => Results.NoContent())
-   .Accepts<Student>("application/json");
+// Will correcly report a student as a query string parameter
+app.MapPost("/enroll", (Student student) => Results.NoContent());
 
-// Will report the student in the body only
-app.MapPost("/enroll2", ([FromBody] Student student) => Results.NoContent())
+// Will report a student as a query string parameter and as the request body
+app.MapPost("/enroll-withaccepts", (Student student) => Results.NoContent())
    .Accepts<Student>("application/json");
 
 // Will correctly report the parameter as a string
 app.MapGet("/student/{student}", (Student student) => $"Hi {student.Name}");
+
+// Will report the parameter as a string and as the request body
+app.MapGet("/student-withaccepts/{student}", (Student student) => $"Hi {student.Name}")
+    .Accepts<Student>("application/json");
 
 app.Run();
 
