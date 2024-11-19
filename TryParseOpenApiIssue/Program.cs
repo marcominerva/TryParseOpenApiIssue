@@ -29,7 +29,7 @@ app.MapPost("/enroll1", (Student student) => Results.NoContent())
 app.MapPost("/enroll2", ([FromBody] Student student) => Results.NoContent())
    .Accepts<Student>("application/json");
 
-// Will report the parameter as an object instead of as a string
+// Will correctly report the parameter as a string
 app.MapGet("/student/{student}", (Student student) => $"Hi {student.Name}");
 
 app.Run();
